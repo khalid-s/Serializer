@@ -53,7 +53,7 @@ class ArrayToXml
         $this->setEncoding($encoding);
         $this->setVersion($version);
         $this->setXml();
-        $this->createXML($node_name);
+        $this->createXML($node_name, $this->getData());
     }
 
     /**
@@ -173,7 +173,7 @@ class ArrayToXml
         $version = is_null($version) ? $this->getVersion() : $version;
         $encoding = is_null($encoding) ? $this->getEncoding() : $encoding;
 
-        $this->xml = new DomDocument($version, $encoding);
+        $this->xml = new \DomDocument($version, $encoding);
         $this->xml->formatOutput = $format_output;
 
         return $this;
@@ -182,10 +182,13 @@ class ArrayToXml
     /**
      * Convert an Array to XML
      * @param string $node_name - name of the root node to be converted
-     * @param array $data - aray to be converterd
-     * @return DOMNode
+     * @param array $data - array to be converterd
+     *
+     * @throws \Exception
+     *
+     * @return \DOMElement
      */
-    private function &convert($node_name, $data=array()) {
+    private function convert($node_name, $data=array()) {
 
         //print_arr($node_name);
         $xml = $this->getXMLRoot();
@@ -196,7 +199,7 @@ class ArrayToXml
             if(isset($data['@attributes'])) {
                 foreach($data['@attributes'] as $key => $value) {
                     if(!$this->isValidTagName($key)) {
-                        throw new Exception('[Array2XML] Illegal character in attribute name. attribute: '.$key.' in node: '.$node_name);
+                        throw new \Exception('[Array2XML] Illegal character in attribute name. attribute: '.$key.' in node: '.$node_name);
                     }
                     $node->setAttribute($key, $this->bool2str($value));
                 }
@@ -223,7 +226,7 @@ class ArrayToXml
             // recurse to get the node for that key
             foreach($data as $key=>$value){
                 if(!$this->isValidTagName($key)) {
-                    throw new Exception('[Array2XML] Illegal character in tag name. tag: '.$key.' in node: '.$node_name);
+                    throw new \Exception('[Array2XML] Illegal character in tag name. tag: '.$key.' in node: '.$node_name);
                 }
                 if(is_array($value) && is_numeric(key($value))) {
                     // MORE THAN ONE NODE OF ITS KIND;
@@ -242,8 +245,8 @@ class ArrayToXml
 
         // after we are done with all the keys in the array (if it is one)
         // we check if it has any text value, if yes, append it.
-        if(!is_array($arr)) {
-            $node->appendChild($xml->createTextNode($this->bool2str($arr)));
+        if(!is_array($data)) {
+            $node->appendChild($xml->createTextNode($this->bool2str($data)));
         }
 
         return $node;
@@ -265,6 +268,8 @@ class ArrayToXml
 
     /**
      * Get string representation of boolean value
+     *
+     * @param bool $v
      *
      * @return string (true|false)
      */
