@@ -1,0 +1,11 @@
+{
+    "name": "romenys/serializer",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Khalid Sookia",
+            "email": "khalidsookia@gmail.com"
+        }
+    ],
+    "require": {}
+}
