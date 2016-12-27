@@ -60,7 +60,7 @@ class ArrayToXml
      * get XML
      * @return \DOMDocument
      */
-    private function getXml()
+    public function getXml()
     {
         return $this->xml;
     }
