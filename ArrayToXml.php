@@ -38,13 +38,31 @@ class ArrayToXml
      */
     private $xml = null;
 
-    public function __construct(array $data, $header = null, $encoding = null, $version = null)
+    /**
+     * ArrayToXml constructor.
+     * @param string $node_name
+     * @param array $data
+     * @param string $header [optional]
+     * @param string $encoding [optional]
+     * @param string $version [optional]
+     */
+    public function __construct($node_name, array $data, $header = null, $encoding = null, $version = null)
     {
         $this->setData($data);
         $this->setHeader($header);
         $this->setEncoding($encoding);
         $this->setVersion($version);
         $this->setXml();
+        $this->createXML($node_name);
+    }
+
+    /**
+     * get XML
+     * @return \DOMDocument
+     */
+    private function getXml()
+    {
+        return $this->xml;
     }
 
     /**
@@ -54,13 +72,13 @@ class ArrayToXml
      *
      * @return \DomDocument
      */
-    public function createXML($node_name, $data = array()) {
-        $xml = $this->getXMLRoot();
-        $xml->appendChild($this->convert($node_name, $data));
+    private function createXML($node_name, $data = array()) {
+        $this->xml = $this->getXMLRoot();
+        $this->xml->appendChild($this->convert($node_name, $data));
 
-        $this->$xml = null;    // clear the xml node in the class for 2nd time use.
+//        $this->xml = null;    // clear the xml node in the class for 2nd time use.
 
-        return $xml;
+        return $this->xml;
     }
 
     /**
@@ -159,11 +177,6 @@ class ArrayToXml
         $this->xml->formatOutput = $format_output;
 
         return $this;
-    }
-
-    private function getXml()
-    {
-        return $this->xml;
     }
 
     /**
