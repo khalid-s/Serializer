@@ -4,6 +4,8 @@
  * Author: Khalid Sookia <khalidsookia@gmail.com>
  * Date: 27/12/16
  * Time: 23:01
+ *
+ * @todo need to correct booleans and check for attributes
  */
 
 namespace Romenys\Serializer;
@@ -75,8 +77,6 @@ class ArrayToXml
     private function createXML($node_name, $data = array()) {
         $this->xml = $this->getXMLRoot();
         $this->xml->appendChild($this->convert($node_name, $data));
-
-//        $this->xml = null;    // clear the xml node in the class for 2nd time use.
 
         return $this->xml;
     }
