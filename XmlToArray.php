@@ -10,7 +10,7 @@
  * @todo need to work out the lib as it is just a copy of the original
  */
 
-namespace Romenys\Serializer;
+namespace PhpLight\Serializer;
 
 class XmlToArray
 {

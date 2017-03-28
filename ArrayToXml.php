@@ -8,7 +8,7 @@
  * @todo need to correct booleans and check for attributes
  */
 
-namespace Romenys\Serializer;
+namespace PhpLight\Serializer;
 
 
 class ArrayToXml

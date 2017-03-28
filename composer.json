@@ -1,5 +1,5 @@
 {
-    "name": "romenys/serializer",
+    "name": "php-light/serializer",
     "type": "library",
     "authors": [
         {
@@ -9,7 +9,7 @@
     ],
     "require": {},
     "autoload": {
-        "psr-4": { "Romenys\\Serializer\\": "" },
+        "psr-4": { "PhpLight\\Serializer\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]
